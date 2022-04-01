@@ -30,7 +30,7 @@
 
         <div class="d-flex flex-wrap text-center">
           <p v-for="num in startDay()" :key="num" class="py-1"></p>
-          <p v-for="num in daysInMonths()" :key="num" class="py-1">{{ num }}</p>
+          <p v-for="num in daysInMonths()" :key="num" class="py-1" :class="currentDateClass(num)">{{ num }}</p>
         </div>
         
       </div>
@@ -47,6 +47,7 @@ export default {
       title: "Calendar",
       days: ["sun", "mon", "tue", "wed", "thur", "fri", "sat"],
       currentMonth: new Date().getMonth(),
+      currentDate: new Date().getUTCDate(),
       currentYear: new Date().getUTCFullYear(),
       monthsInYear: new Date().getUTCMonth(),
     };
@@ -73,12 +74,18 @@ export default {
       } else {
         this.currentMonth++;
       }      
-    }
+    },
+    currentDateClass(day) {
+      return new Date(this.currentYear, this.currentMonth, day).toDateString() === new Date().toDateString() ? 'current-date' : '';
+    },
   },
   computed: {
     currentMonthName() {
       return new Date(this.currentYear, this.currentMonth).toLocaleString('default', {month: 'long'});
-    }
+    },
+  },
+  mounted() {
+
   }
 };
 </script>
@@ -86,6 +93,12 @@ export default {
 <style scoped>
 .card-dimension {
   width: 700px;
+}
+
+.current-date {
+  font-weight: bold;
+  font-size: 24px;
+  color: orange;
 }
 
 h4,
