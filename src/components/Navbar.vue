@@ -15,14 +15,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link" :class="$route.name === 'home' ? 'active' : ''">Home</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/dc-heroes" class="nav-link" :class="$route.name === 'dcHeroes' ? 'active' : ''">DC Heroes</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/calendar" class="nav-link" :class="$route.name === 'calendar' ? 'active' : ''">Calendar</router-link>
+          <li v-for="link in linksList" :key="link" class="nav-item">
+            <router-link
+              :to="link.to"
+              class="nav-link"
+              :class="$route.name === link.name ? 'active' : ''"
+              >{{ link.title }}
+            </router-link>
           </li>
         </ul>
         <form class="d-flex">
@@ -40,20 +39,29 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "Navbar",
+  data() {
+    return {
+      linksList: [
+        {title: "Home", to: "/", name: "home"},
+        {title: "DC Heroes", to: "/dc-heroes", name: "dcHeroes"},
+        {title: "Calendar", to: "/calendar", name: "calendar"},
+        {title: "Markdown", to: "/markdown", name: "markdown"},
+      ],
+    };
+  },
+};
 </script>
 
 <style scoped>
 /* @import "~bootstrap/dist/css/bootstrap.css"; */
-.btn:focus, a:focus
-{
+.btn:focus,
+a:focus {
   outline: none;
 }
 
-
-
-input:focus
-{
+input:focus {
   outline: none !important;
   box-shadow: none;
 }
