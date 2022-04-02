@@ -49,7 +49,6 @@ export default {
       currentMonth: new Date().getMonth(),
       currentDate: new Date().getUTCDate(),
       currentYear: new Date().getUTCFullYear(),
-      monthsInYear: new Date().getUTCMonth(),
     };
   },
   methods: {
@@ -95,6 +94,7 @@ export default {
 <style scoped>
 .card-dimension {
   width: 700px;
+  max-height: 700px;
 }
 
 .current-date {
