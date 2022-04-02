@@ -29,8 +29,8 @@
         </div>
 
         <div class="d-flex flex-wrap text-center">
-          <p v-for="num in startDay()" :key="num" class="py-1"></p>
-          <p v-for="num in daysInMonths()" :key="num" class="py-1" :class="currentDateClass(num)">{{ num }}</p>
+          <p v-for="day in startDay()" :key="day" class="py-1"></p>
+          <p v-for="day in daysInMonths()" :key="day" class="py-1" :class="currentDateClass(day)">{{ day }}</p>
         </div>
         
       </div>
@@ -76,7 +76,9 @@ export default {
       }      
     },
     currentDateClass(day) {
-      return new Date(this.currentYear, this.currentMonth, day).toDateString() === new Date().toDateString() ? 'current-date' : '';
+      const currentFullDate = new Date(this.currentYear, this.currentMonth, day).toDateString();
+      const calendarFullDate = new Date().toDateString();
+      return currentFullDate === calendarFullDate ? 'current-date' : '';
     },
   },
   computed: {
