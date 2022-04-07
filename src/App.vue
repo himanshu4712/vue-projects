@@ -1,17 +1,46 @@
 <template>
-  <main>
-    <Navbar />
+  <main >
+    <Navbar @open-login-modal="isLoginOpen = true" :loggedIn="isLoggedIn" />
+    <LoginModal v-if="isLoginOpen" @close-login-modal="isLoginOpen = false" />
     <RouterView />
   </main>
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Navbar from "./components/Navbar.vue";
+import LoginModal from './components/LoginModal.vue';
 export default {
   name: "App",
   components: {
     Navbar,
+    LoginModal,
+  }, 
+  data() {
+    return {
+      isLoginOpen: false,
+      isLoggedIn: false,
+      authUser: {},
+    }
   },
+  methods: {
+
+  },
+  mounted() {
+
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.isLoggedIn = true;
+        this.authUser = user;
+        console.log(user);
+      } else {
+        this.isLoggedIn = false;
+        this.authUser = {};
+
+      }
+    });
+  }
 };
 </script>
 
@@ -23,7 +52,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   height: 100vh;
-  background-color: #b9b4b4 !important;
+  background: url("/images/background.jpg") center center no-repeat fixed;
 }
 
 </style>

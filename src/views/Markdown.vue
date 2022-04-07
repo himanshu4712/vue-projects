@@ -10,7 +10,7 @@
       <div class="card-body">
         <div class="d-flex h-100">
           <div class="w-50 border-sm">
-            <textarea
+            <textarea ref="markdownRef"
               class="w-100 h-100"
               v-bind:value="text"
               @input="(event) => {updateText(event)}"
@@ -47,6 +47,9 @@ export default {
     markedText() {
       return DOMPurify.sanitize(marked(this.text));
     },
+  },
+  mounted() {
+    this.$refs.markdownRef.focus();
   },
 };
 </script>

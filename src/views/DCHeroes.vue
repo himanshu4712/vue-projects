@@ -3,7 +3,7 @@
     <div class="card mx-auto mt-5 shadow-lg" :style="{ width: width }">
       <div class="card-header bg-info">
         <h2 class="card-title text-center display-4">
-          {{ title.toUpperCase() }} 
+          {{ title.toUpperCase() }}
         </h2>
       </div>
 
@@ -15,10 +15,7 @@
             class="d-flex justify-content-between align-items-center mb-1"
           >
             <div class="text-capitalize">{{ index + 1 }}. {{ hero }}</div>
-            <button
-              class="btn btn-danger btn-sm"
-              @click="removeHero(index)"
-            >
+            <button class="btn btn-danger btn-sm" @click="removeHero(index)">
               x
             </button>
           </div>
@@ -29,6 +26,7 @@
         <form @submit.prevent="addHero" method="get">
           <div class="input-group">
             <input
+              ref="dcHeroesRef"
               type="text"
               class="form-control add-hero"
               name="add_hero"
@@ -82,6 +80,9 @@ export default {
     heroesCount() {
       return this.dcHeroes.length;
     },
+  },
+  mounted() {
+    this.$refs.dcHeroesRef.focus();
   },
 };
 </script>
