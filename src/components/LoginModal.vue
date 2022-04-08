@@ -9,18 +9,23 @@
           class="
             d-flex
             justify-content-between
-            pb-3
             px-2
-            pt-2
+            pt-1
             position-relative
           "
         >
           <h3 class="display-5 text-center w-100">Login</h3>
+          
           <button
             type="button"
             class="btn-close"
             @click="$emit('close-login-modal')"
           ></button>
+        </div>
+        <hr class="mt-2 mb-3">
+        <div class="my-2">
+          <LoginWithGoogle @close-modal="close" />
+          <h5 class="text-center">Or</h5>
         </div>
         <div class="login-form px-2 pb-2 pt-3">
           <div class="mb-3">
@@ -93,8 +98,12 @@
 <script>
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import firebase from "../utilities/firebase";
+import LoginWithGoogle from "./LoginWithGoogle.vue";
 export default {
   name: "LoginModal",
+  components: {
+    LoginWithGoogle
+  },
   data() {
     return {
       email: "",

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="card mx-auto mt-5 shadow-lg" :style="{ width: width }">
+    <div class="card mx-auto mt-5 shadow-lg dimension">
       <div class="card-header bg-info">
         <h2 class="card-title text-center display-4">
           {{ title.toUpperCase() }}
@@ -23,7 +23,7 @@
       </div>
 
       <div class="card-footer">
-        <form @submit.prevent="addHero" method="get">
+        <form method="get">
           <div class="input-group">
             <input
               ref="dcHeroesRef"
@@ -34,9 +34,9 @@
               placeholder="Type Here..."
             />
             <button
-              type="submit"
+              type="button" @click="addHero"
               class="btn btn-success px-4 py-2 text-white"
-              :disabled="!isFilled"
+              :disabled="!newHero"
             >
               ADD HERO
             </button>
@@ -49,40 +49,43 @@
 </template>
 
 <script>
+import { computed, onMounted, ref } from "vue";
 export default {
   name: "DCHeroes",
   components: {},
-  data() {
-    return {
-      title: "DC Heroes",
-      // attribute: "value",
-      newHero: "",
-      dcHeroes: ["supergirl", "flash", "arrow", "batman", "superman"],
-      width: "500px",
-      isDisabled: true,
-    };
-  },
-  methods: {
-    addHero() {
-      if (this.newHero !== "") {
-        this.dcHeroes.unshift(this.newHero);
-        this.newHero = "";
+  setup() {
+    const title = "DC Heroes";
+    const newHero = ref("");
+    const dcHeroes = ref([
+      "supergirl", 
+      "flash", 
+      "arrow", 
+      "batman", 
+      "superman"
+    ]);
+    const dcHeroesRef = ref("");
+    const isDisabled = true;
+    
+    onMounted(() => {
+      dcHeroesRef.value.focus();
+    });
+
+    const heroesCount = computed({
+      get: () => dcHeroes.value.length,
+    });
+
+    const addHero = () => {
+      if (newHero.value !== "") {
+        dcHeroes.value.unshift(newHero.value);
+        newHero.value = "";
       }
-    },
-    removeHero(index) {
-      this.dcHeroes = this.dcHeroes.filter((hero, i) => i !== index);
-    },
-  },
-  computed: {
-    isFilled() {
-      return this.newHero;
-    },
-    heroesCount() {
-      return this.dcHeroes.length;
-    },
-  },
-  mounted() {
-    this.$refs.dcHeroesRef.focus();
+    };
+
+    const removeHero = (index) => {
+      dcHeroes.value = dcHeroes.value.filter((hero, i) => i !== index);
+    };   
+
+    return { title, dcHeroes, newHero, dcHeroesRef, heroesCount, isDisabled, addHero, removeHero };
   },
 };
 </script>
@@ -90,7 +93,7 @@ export default {
 <style scoped>
 .dimension {
   width: 500px;
-  height: 700px;
+  /* height: 700px; */
 }
 
 .btn:focus,

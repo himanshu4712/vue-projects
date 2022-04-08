@@ -8,6 +8,7 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import firebase from "./utilities/firebase";
 import Navbar from "./components/Navbar.vue";
 import LoginModal from './components/LoginModal.vue';
 export default {
@@ -28,7 +29,7 @@ export default {
   },
   mounted() {
 
-    const auth = getAuth();
+    const auth = getAuth(firebase);
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
